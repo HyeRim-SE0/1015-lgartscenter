@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LGAI청소년캠프 1:1 문의글</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#e11d48',
+              600: '#be123c',
+              700: '#9f1239',
+              dark: '#881337',
+            },
+            camp: {
+              primary: '#A50034', // LG 헤리티지 컬러 톤
+              accent: '#6366F1',
+              surface: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- 헤더 영역 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#A50034] to-rose-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold tracking-wider px-2 py-0.5 rounded-full bg-rose-100 text-[#A50034]">LG AI 청소년캠프</span>
+            <span class="text-xs text-slate-400 hidden sm:inline">2026 Season</span>
+          </div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">1:1 문의 센터</h1>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-xs sm:text-sm text-slate-500 hidden md:flex items-center gap-1.5">
+          <i class="fa-regular fa-clock text-rose-500"></i> 평일 09:30 - 17:30 (점심 12:00 - 13:00)
+        </span>
+        <button id="faqModalBtn" class="text-xs sm:text-sm font-medium px-3.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 transition flex items-center gap-1.5">
+          <i class="fa-regular fa-circle-question text-slate-400"></i> 자주 묻는 질문
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <!-- 인트로 안내 배너 -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-rose-950 text-white p-6 sm:p-8 shadow-md">
+      <div class="relative z-10 max-w-2xl">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-white/10 backdrop-blur-md text-rose-300 border border-white/10 mb-3">
+          <i class="fa-solid fa-sparkles"></i> 캠프 운영국 실시간 지원
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
+          LGAI청소년캠프 1:1 문의글
+        </h2>
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+          캠프 선발 과정, AI 실습 프로그램, 팀 프로젝트 및 준비물 등 궁금한 사항을 자유롭게 남겨주세요. 
+          운영 멘토단이 24시간 이내에 꼼꼼하게 확인 후 답변해 드립니다.
+        </p>
+      </div>
+      <!-- 장식용 배경 그래픽 -->
+      <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute right-12 top-6 opacity-10 text-9xl hidden lg:block">
+        <i class="fa-solid fa-comments"></i>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+      <!-- 왼쪽 영역: 문의글 작성 폼 (5 cols on lg) -->
+      <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 sticky top-24">
+        <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-[#A50034]"></span>
+            <h3 class="text-lg font-bold text-slate-900">문의글 작성하기</h3>
+          </div>
+          <span class="text-xs text-rose-600 font-medium">* 필수 항목</span>
+        </div>
+
+        <form id="inquiryForm" class="space-y-4">
+          <!-- 문의 카테고리 -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5">문의 유형 <span class="text-rose-500">*</span></label>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="교육/커리큘럼" class="peer sr-only" checked>
+                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
+                  <i class="fa-solid fa-laptop-code block text-sm mb-1"></i> 교육 과정
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="선발/일정" class="peer sr-only">
+                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
+                  <i class="fa-regular fa-calendar-check block text-sm mb-1"></i> 선발/일정
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="사전과제/계정" class="peer sr-only">
+                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
+                  <i class="fa-solid fa-key block text-sm mb-1"></i> 과제/계정
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="category" value="기타/수료증" class="peer sr-only">
+                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
+                  <i class="fa-solid fa-certificate block text-sm mb-1"></i> 기타/수료증
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- 작성자 이름 (추가 실무 필드) -->
+          <div>
+            <label for="authorName" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              작성자 (캠프 지원자/학생) <span class="text-rose-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input type="text" id="authorName" required placeholder="예: 김엘지" 
+                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition">
+            </div>
+          </div>
+
+          <!-- 문의한 날짜 (요청 항목) -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="inquiryDate" class="block text-xs font-semibold text-slate-700">
+                문의한 날짜 <span class="text-rose-500">*</span>
+              </label>
+              <button type="button" id="setTodayBtn" class="text-[11px] text-[#A50034] hover:underline font-medium">
+                오늘 날짜로 설정
+              </button>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
+                <i class="fa-regular fa-calendar"></i>
+              </span>
+              <input type="date" id="inquiryDate" required 
+                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition bg-white text-slate-800">
+            </div>
+          </div>
+
+          <!-- 문의 제목 (요청 항목) -->
+          <div>
+            <label for="inquiryTitle" class="block text-xs font-semibold text-slate-700 mb-1.5">
+              문의 제목 <span class="text-rose-500">*</span>
+            </label>
+            <input type="text" id="inquiryTitle" required placeholder="제목을 구체적으로 적어주세요" 
+              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition">
+          </div>
+
+          <!-- 문의 내용 (요청 항목) -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label for="inquiryContent" class="block text-xs font-semibold text-slate-700">
+                문의 내용 <span class="text-rose-500">*</span>
+              </label>
+              <span id="charCount" class="text-[11px] text-slate-400">0 / 1000자</span>
+            </div>
+            <textarea id="inquiryContent" required rows="5" maxlength="1000" 
+              placeholder="궁금하신 내용이나 캠프 진행 중 발생한 문제를 자세히 적어주시면 더 신속하고 정확한 답변이 가능합니다."
+              class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition resize-none"></textarea>
+          </div>
+
+          <!-- 비밀글 옵션 -->
+          <div class="flex items-center gap-2 pt-1">
+            <input type="checkbox" id="isPrivate" class="w-4 h-4 text-[#A50034] rounded border-slate-300 focus:ring-[#A50034]">
+            <label for="isPrivate" class="text-xs text-slate-600 select-none cursor-pointer flex items-center gap-1">
+              <i class="fa-solid fa-lock text-slate-400 text-[11px]"></i> 비공개 문의로 등록 (작성자 및 관리자만 확인)
+            </label>
+          </div>
+
+          <!-- 등록 버튼 (요청 항목) -->
+          <button type="submit" id="submitBtn" 
+            class="w-full mt-3 py-3 px-4 bg-gradient-to-r from-[#A50034] to-[#c40e44] hover:from-[#93002e] hover:to-[#a90c3b] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group active:scale-[0.99]">
+            <span>등록하기</span>
+            <i class="fa-solid fa-paper-plane text-xs transition-transform group-hover:translate-x-1"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- 오른쪽 영역: 등록된 게시글 보여주기 칸 (7 cols on lg) -->
+      <section class="lg:col-span-7 space-y-4">
+        
+        <!-- 게시판 상단 헤더 -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <i class="fa-solid fa-list-ul text-[#A50034]"></i>
+              등록된 문의글
+            </h3>
+            <span id="totalBadge" class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+              총 0건
+            </span>
+          </div>
+        </div>
+
+        <!-- 등록된 게시글 목록 칸 (초기에는 완전히 비어있음) -->
+        <div id="postsContainer" class="space-y-3">
+          <!-- 문의글이 등록되면 이 자리에만 내용이 순차적으로 추가됩니다 -->
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- FAQ 모달 (추가 안내용) -->
+  <div id="faqModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-[#A50034]"></i> 자주 묻는 질문 FAQ
+        </h4>
+        <button id="closeFaqBtn" class="text-slate-400 hover:text-slate-600 text-lg leading-none">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-600">
+        <div class="p-3 bg-slate-50 rounded-xl">
+          <p class="font-semibold text-slate-800 mb-1">Q. 코딩 경험이 없어도 캠프 신청이 가능한가요?</p>
+          <p>A. 네! 기초 파이썬부터 단계별 AI 모델 실습까지 친절한 멘토링이 함께 제공되므로 열정 있는 청소년 누구나 환영합니다.</p>
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl">
+          <p class="font-semibold text-slate-800 mb-1">Q. 캠프 이수 시 공식 수료증이 발급되나요?</p>
+          <p>A. 전체 교육 세션의 80% 이상 출석 및 최종 캡스톤 프로젝트를 발표한 학생에게 공식 LG AI 청소년캠프 수료증이 발급됩니다.</p>
+        </div>
+      </div>
+      <button id="closeFaqBtn2" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl transition">
+        확인 완료
+      </button>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 컴포넌트 -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toastContent" class="bg-slate-900 text-white text-xs sm:text-sm px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5">
+      <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toastMessage">문의글이 성공적으로 등록되었습니다.</span>
+    </div>
+  </div>
+
+  <!-- 푸터 영역 -->
+  <footer class="mt-auto border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-400">
+    <div class="max-w-6xl mx-auto px-4 space-y-1">
+      <p class="font-medium text-slate-500">LG AI Youth Camp Helpdesk System</p>
+      <p>© 2026 LG AI 청소년캠프 운영사무국. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 초기에는 등록된 글이 전혀 없는 빈 배열로 시작
+    let posts = [];
+
+    // DOM 요소
+    const inquiryForm = document.getElementById('inquiryForm');
+    const postsContainer = document.getElementById('postsContainer');
+    const totalBadge = document.getElementById('totalBadge');
+    const inquiryDateInput = document.getElementById('inquiryDate');
+    const inquiryContentInput = document.getElementById('inquiryContent');
+    const charCountEl = document.getElementById('charCount');
+    const setTodayBtn = document.getElementById('setTodayBtn');
+
+    // FAQ 모달 제어 요소
+    const faqModal = document.getElementById('faqModal');
+    const faqModalBtn = document.getElementById('faqModalBtn');
+    const closeFaqBtn = document.getElementById('closeFaqBtn');
+    const closeFaqBtn2 = document.getElementById('closeFaqBtn2');
+
+    // 오늘 날짜 구하기 (YYYY-MM-DD)
+    function getTodayString() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // 기본 날짜를 오늘 날짜로 세팅
+    inquiryDateInput.value = getTodayString();
+
+    setTodayBtn.addEventListener('click', () => {
+      inquiryDateInput.value = getTodayString();
+      showToast('문의 날짜가 오늘로 설정되었습니다.');
+    });
+
+    // 글자 수 실시간 카운트
+    inquiryContentInput.addEventListener('input', () => {
+      const len = inquiryContentInput.value.length;
+      charCountEl.textContent = `${len} / 1000자`;
+      if (len > 900) {
+        charCountEl.classList.add('text-rose-600', 'font-semibold');
+      } else {
+        charCountEl.classList.remove('text-rose-600', 'font-semibold');
+      }
+    });
+
+    // 안전한 HTML 이스케이프 함수
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // 토스트 팝업 표시
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMessage.textContent = message;
+      if (isError) {
+        toastIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400';
+      } else {
+        toastIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2600);
+    }
+
+    // 게시글 렌더링 함수 (글이 없으면 아래 영역이 완전히 비어있음)
+    function renderPosts() {
+      totalBadge.textContent = `총 ${posts.length}건`;
+
+      if (posts.length === 0) {
+        postsContainer.innerHTML = '';
+        return;
+      }
+
+      postsContainer.innerHTML = posts.map((post) => {
+        return `
+          <article class="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-slate-300 transition-all duration-150 overflow-hidden" id="card-${post.id}">
+            <!-- 카드 본문 -->
+            <div class="p-4 sm:p-5">
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-rose-50 text-[#A50034]">
+                  ${escapeHtml(post.category)}
+                </span>
+                <span class="inline-flex items-center gap-1 font-semibold text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                  답변대기
+                </span>
+              </div>
+
+              <!-- 문의 제목 -->
+              <h4 class="text-base font-bold text-slate-900 mb-2 leading-snug break-words">
+                ${escapeHtml(post.title)}
+              </h4>
+
+              <!-- 문의 내용 (보여주는 칸) -->
+              <div class="text-slate-700 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap bg-slate-50/90 rounded-xl p-3.5 border border-slate-100 mb-3 font-normal">
+                ${escapeHtml(post.content)}
+              </div>
+
+              <!-- 메타 정보 (작성자 및 문의 날짜) 및 삭제 버튼 -->
+              <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-400">
+                <div class="flex items-center gap-3">
+                  <span class="flex items-center gap-1 text-slate-600 font-medium">
+                    <i class="fa-regular fa-user text-slate-400"></i> ${escapeHtml(post.author)}
+                  </span>
+                  <span class="flex items-center gap-1 text-slate-500">
+                    <i class="fa-regular fa-calendar text-slate-400"></i> 문의일: ${escapeHtml(post.date)}
+                  </span>
+                </div>
+                <div>
+                  <button onclick="deletePost('${post.id}')" title="삭제하기" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // 문의글 등록 이벤트 핸들러
+    inquiryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const titleInput = document.getElementById('inquiryTitle');
+      const authorInput = document.getElementById('authorName');
+      const selectedCategory = document.querySelector('input[name="category"]:checked')?.value || '일반';
+
+      const title = titleInput.value.trim();
+      const content = inquiryContentInput.value.trim();
+      const author = authorInput.value.trim();
+      const date = inquiryDateInput.value;
+
+      if (!title || !content || !author || !date) {
+        showToast('모든 필수 항목을 입력해주세요.', true);
+        return;
+      }
+
+      // 새 문의글 객체 생성
+      const newPost = {
+        id: 'post-' + Date.now(),
+        title: title,
+        author: author,
+        category: selectedCategory,
+        date: date,
+        content: content
+      };
+
+      // 목록 최상단에 새 글 추가
+      posts.unshift(newPost);
+      renderPosts();
+
+      // 폼 입력값 초기화 (날짜는 오늘로 유지)
+      titleInput.value = '';
+      inquiryContentInput.value = '';
+      authorInput.value = '';
+      charCountEl.textContent = '0 / 1000자';
+
+      showToast('문의글이 성공적으로 등록되었습니다!');
+
+      // 모바일 화면 등에서 바로 볼 수 있게 스크롤
+      if (window.innerWidth < 1024) {
+        postsContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+
+    // 문의글 삭제 기능
+    window.deletePost = function(postId) {
+      const targetIndex = posts.findIndex(p => p.id === postId);
+      if (targetIndex > -1) {
+        posts.splice(targetIndex, 1);
+        renderPosts();
+        showToast('문의글이 삭제되었습니다.');
+      }
+    };
+
+    // FAQ 모달 열기/닫기
+    faqModalBtn.addEventListener('click', () => {
+      faqModal.classList.remove('hidden');
+    });
+    const hideModal = () => faqModal.classList.add('hidden');
+    closeFaqBtn.addEventListener('click', hideModal);
+    closeFaqBtn2.addEventListener('click', hideModal);
+    faqModal.addEventListener('click', (e) => {
+      if (e.target === faqModal) hideModal();
+    });
+
+    // 초기 렌더링 (아무 글도 없으므로 깨끗한 빈 상태 유지)
+    renderPosts();
+  </script>
+</body>
+</html>
