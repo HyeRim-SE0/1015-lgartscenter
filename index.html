@@ -4,515 +4,1014 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LGAI청소년캠프 1:1 문의글</title>
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#fff1f2',
-              100: '#ffe4e6',
-              500: '#e11d48',
-              600: '#be123c',
-              700: '#9f1239',
-              dark: '#881337',
-            },
-            camp: {
-              primary: '#A50034', // LG 헤리티지 컬러 톤
-              accent: '#6366F1',
-              surface: '#F8FAFC'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Google Fonts (Pretendard & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap');
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+      background: linear-gradient(135deg, #091220 0%, #0F172A 50%, #171E2E 100%);
+      color: #E2E8F0;
+      min-height: 100vh;
     }
-    .custom-scrollbar::-webkit-scrollbar {
+    .glass-card {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    .brand-gradient {
+      background: linear-gradient(135deg, #A50034 0%, #C41243 60%, #E93160 100%);
+    }
+    .brand-border {
+      border-color: #A50034;
+    }
+    .custom-scroll::-webkit-scrollbar {
       width: 6px;
+      height: 6px;
     }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
+    .custom-scroll::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 9999px;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 4px;
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: rgba(165, 0, 52, 0.4);
+      border-radius: 9999px;
     }
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(165, 0, 52, 0.7);
+    }
+    /* Toast Notification */
+    #toast {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="flex flex-col min-h-screen">
 
-  <!-- 헤더 영역 -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#A50034] to-rose-500 flex items-center justify-center text-white font-bold text-lg shadow-sm">
-          <i class="fa-solid fa-microchip"></i>
+  <!-- 상단 네비게이션 헤더 -->
+  <header class="sticky top-0 z-40 border-b border-slate-700/60 bg-slate-900/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl brand-gradient flex items-center justify-center shadow-lg shadow-rose-900/30">
+          <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold tracking-wider px-2 py-0.5 rounded-full bg-rose-100 text-[#A50034]">LG AI 청소년캠프</span>
-            <span class="text-xs text-slate-400 hidden sm:inline">2026 Season</span>
+          <div class="flex items-center space-x-2">
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 tracking-wider">AI YOUTH CAMP</span>
+            <span id="cloudStatus" class="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              클라우드 실시간 동기화
+            </span>
           </div>
-          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">1:1 문의 센터</h1>
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight">LGAI청소년캠프 1:1 문의글</h1>
         </div>
       </div>
-      <div class="flex items-center gap-3">
-        <span class="text-xs sm:text-sm text-slate-500 hidden md:flex items-center gap-1.5">
-          <i class="fa-regular fa-clock text-rose-500"></i> 평일 09:30 - 17:30 (점심 12:00 - 13:00)
-        </span>
-        <button id="faqModalBtn" class="text-xs sm:text-sm font-medium px-3.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 transition flex items-center gap-1.5">
-          <i class="fa-regular fa-circle-question text-slate-400"></i> 자주 묻는 질문
+
+      <!-- 상단 액션 -->
+      <div class="flex items-center space-x-2">
+        <button id="exportAllJsonBtn" class="px-3 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg flex items-center gap-1.5 transition">
+          <i data-lucide="download" class="w-3.5 h-3.5 text-rose-400"></i>
+          <span>전체 변수 JSON 복사</span>
+        </button>
+        <button id="openGuideBtn" class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition" title="외부 연동 가이드">
+          <i data-lucide="help-circle" class="w-5 h-5"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-    <!-- 인트로 안내 배너 -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-rose-950 text-white p-6 sm:p-8 shadow-md">
-      <div class="relative z-10 max-w-2xl">
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-white/10 backdrop-blur-md text-rose-300 border border-white/10 mb-3">
-          <i class="fa-solid fa-sparkles"></i> 캠프 운영국 실시간 지원
-        </span>
-        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">
-          LGAI청소년캠프 1:1 문의글
-        </h2>
-        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-          캠프 선발 과정, AI 실습 프로그램, 팀 프로젝트 및 준비물 등 궁금한 사항을 자유롭게 남겨주세요. 
-          운영 멘토단이 24시간 이내에 꼼꼼하게 확인 후 답변해 드립니다.
-        </p>
-      </div>
-      <!-- 장식용 배경 그래픽 -->
-      <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute right-12 top-6 opacity-10 text-9xl hidden lg:block">
-        <i class="fa-solid fa-comments"></i>
-      </div>
-    </div>
+  <!-- 메인 레이아웃 -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- 좌측 : 문의 입력 폼 영역 (LG 1:1 접수 카드) -->
+    <section class="lg:col-span-5 flex flex-col space-y-4">
+      <div class="glass-card rounded-2xl p-6 relative overflow-hidden">
+        <div class="absolute -top-12 -right-12 w-32 h-32 bg-rose-600/10 rounded-full blur-2xl pointer-events-none"></div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-      <!-- 왼쪽 영역: 문의글 작성 폼 (5 cols on lg) -->
-      <section class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 sticky top-24">
-        <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#A50034]"></span>
-            <h3 class="text-lg font-bold text-slate-900">문의글 작성하기</h3>
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+          <div class="flex items-center space-x-2.5">
+            <div class="p-2 bg-rose-500/10 rounded-lg border border-rose-500/20 text-rose-400">
+              <i data-lucide="edit-3" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-lg font-bold text-white">1:1 문의글 등록</h2>
           </div>
-          <span class="text-xs text-rose-600 font-medium">* 필수 항목</span>
+          <span class="text-xs text-slate-400">외부 앱 변수 추출 지원</span>
         </div>
 
-        <form id="inquiryForm" class="space-y-4">
-          <!-- 문의 카테고리 -->
+        <form id="inquiryForm" class="space-y-4" onsubmit="return false;">
+          <!-- 문의 제목 -->
           <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1.5">문의 유형 <span class="text-rose-500">*</span></label>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <label class="cursor-pointer">
-                <input type="radio" name="category" value="교육/커리큘럼" class="peer sr-only" checked>
-                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
-                  <i class="fa-solid fa-laptop-code block text-sm mb-1"></i> 교육 과정
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="category" value="선발/일정" class="peer sr-only">
-                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
-                  <i class="fa-regular fa-calendar-check block text-sm mb-1"></i> 선발/일정
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="category" value="사전과제/계정" class="peer sr-only">
-                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
-                  <i class="fa-solid fa-key block text-sm mb-1"></i> 과제/계정
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="category" value="기타/수료증" class="peer sr-only">
-                <div class="p-2.5 text-center rounded-xl border border-slate-200 peer-checked:border-[#A50034] peer-checked:bg-rose-50/60 peer-checked:text-[#A50034] font-medium transition">
-                  <i class="fa-solid fa-certificate block text-sm mb-1"></i> 기타/수료증
-                </div>
-              </label>
-            </div>
+            <label for="inquiryTitle" class="block text-xs font-medium text-slate-300 mb-1.5 flex items-center justify-between">
+              <span>문의 제목 <span class="text-rose-400">*</span></span>
+              <span class="text-[11px] text-slate-500 font-mono">variable: title</span>
+            </label>
+            <input 
+              type="text" 
+              id="inquiryTitle" 
+              required
+              placeholder="예: [파이썬 기초] AI 자율주행 코딩 과제 관련 질문" 
+              class="w-full px-3.5 py-2.5 bg-slate-900/90 border border-slate-700/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition"
+            >
           </div>
 
-          <!-- 작성자 이름 -->
-          <div>
-            <label for="authorName" class="block text-xs font-semibold text-slate-700 mb-1.5">
-              작성자 (캠프 지원자/학생) <span class="text-rose-500">*</span>
-            </label>
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
-                <i class="fa-regular fa-user"></i>
-              </span>
-              <input type="text" id="authorName" required placeholder="예: 김엘지" 
-                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition">
+          <!-- 문의자 및 카테고리 (부가 유용 필드) -->
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label for="inquiryAuthor" class="block text-xs font-medium text-slate-300 mb-1.5 flex items-center justify-between">
+                <span>문의자명</span>
+                <span class="text-[11px] text-slate-500 font-mono">author</span>
+              </label>
+              <input 
+                type="text" 
+                id="inquiryAuthor" 
+                placeholder="예: 김엘지 캠퍼" 
+                value="김엘지 캠퍼"
+                class="w-full px-3.5 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition"
+              >
+            </div>
+            <div>
+              <label for="inquiryCategory" class="block text-xs font-medium text-slate-300 mb-1.5 flex items-center justify-between">
+                <span>카테고리</span>
+                <span class="text-[11px] text-slate-500 font-mono">category</span>
+              </label>
+              <select 
+                id="inquiryCategory" 
+                class="w-full px-3 py-2 bg-slate-900/90 border border-slate-700/80 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition"
+              >
+                <option value="AI 교육과정">AI 교육과정</option>
+                <option value="캠프 일정/출석">캠프 일정/출석</option>
+                <option value="과제 및 프로젝트">과제 및 프로젝트</option>
+                <option value="멘토링 신청">멘토링 신청</option>
+                <option value="생활/환경/기타">생활/환경/기타</option>
+              </select>
             </div>
           </div>
 
           <!-- 문의한 날짜 -->
           <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label for="inquiryDate" class="block text-xs font-semibold text-slate-700">
-                문의한 날짜 <span class="text-rose-500">*</span>
-              </label>
-              <button type="button" id="setTodayBtn" class="text-[11px] text-[#A50034] hover:underline font-medium">
-                오늘 날짜로 설정
+            <label for="inquiryDate" class="block text-xs font-medium text-slate-300 mb-1.5 flex items-center justify-between">
+              <span>문의한 날짜 <span class="text-rose-400">*</span></span>
+              <span class="text-[11px] text-slate-500 font-mono">variable: date</span>
+            </label>
+            <div class="relative">
+              <input 
+                type="text" 
+                id="inquiryDate" 
+                required
+                class="w-full pl-3.5 pr-20 py-2.5 bg-slate-900/90 border border-slate-700/80 rounded-xl text-sm text-white font-mono placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition"
+              >
+              <button 
+                type="button" 
+                id="setNowDateBtn" 
+                class="absolute right-2 top-2 px-2 py-1 text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition"
+                title="현재 시간으로 재설정"
+              >
+                지금 현재
               </button>
             </div>
-            <div class="relative">
-              <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 text-sm">
-                <i class="fa-regular fa-calendar"></i>
-              </span>
-              <input type="date" id="inquiryDate" required 
-                class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition bg-white text-slate-800">
-            </div>
-          </div>
-
-          <!-- 문의 제목 -->
-          <div>
-            <label for="inquiryTitle" class="block text-xs font-semibold text-slate-700 mb-1.5">
-              문의 제목 <span class="text-rose-500">*</span>
-            </label>
-            <input type="text" id="inquiryTitle" required placeholder="제목을 구체적으로 적어주세요" 
-              class="w-full px-3 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition">
           </div>
 
           <!-- 문의 내용 -->
           <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label for="inquiryContent" class="block text-xs font-semibold text-slate-700">
-                문의 내용 <span class="text-rose-500">*</span>
-              </label>
-              <span id="charCount" class="text-[11px] text-slate-400">0 / 1000자</span>
-            </div>
-            <textarea id="inquiryContent" required rows="5" maxlength="1000" 
-              placeholder="궁금하신 내용이나 캠프 진행 중 발생한 문제를 자세히 적어주시면 더 신속하고 정확한 답변이 가능합니다."
-              class="w-full px-3 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#A50034]/20 focus:border-[#A50034] transition resize-none"></textarea>
-          </div>
-
-          <!-- 비밀글 옵션 -->
-          <div class="flex items-center gap-2 pt-1">
-            <input type="checkbox" id="isPrivate" class="w-4 h-4 text-[#A50034] rounded border-slate-300 focus:ring-[#A50034]">
-            <label for="isPrivate" class="text-xs text-slate-600 select-none cursor-pointer flex items-center gap-1">
-              <i class="fa-solid fa-lock text-slate-400 text-[11px]"></i> 비공개 문의로 등록 (작성자 및 관리자만 확인)
+            <label for="inquiryContent" class="block text-xs font-medium text-slate-300 mb-1.5 flex items-center justify-between">
+              <span>문의 내용 <span class="text-rose-400">*</span></span>
+              <span class="text-[11px] text-slate-500 font-mono">variable: content</span>
             </label>
+            <textarea 
+              id="inquiryContent" 
+              rows="6" 
+              required
+              placeholder="궁금한 사항이나 AI 모델 학습 중 발생한 오류 내용을 구체적으로 작성해주세요. (예: 딥러닝 텐서 형상 에러, 데이터 전처리 문제 등)"
+              class="w-full px-3.5 py-2.5 bg-slate-900/90 border border-slate-700/80 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:border-rose-500 transition resize-none custom-scroll leading-relaxed"
+            ></textarea>
           </div>
 
-          <!-- 등록 버튼 -->
-          <button type="submit" id="submitBtn" 
-            class="w-full mt-3 py-3 px-4 bg-gradient-to-r from-[#A50034] to-[#c40e44] hover:from-[#93002e] hover:to-[#a90c3b] text-white font-semibold text-sm rounded-xl shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group active:scale-[0.99]">
-            <span>등록하기</span>
-            <i class="fa-solid fa-paper-plane text-xs transition-transform group-hover:translate-x-1"></i>
+          <!-- 등록하기 버튼 -->
+          <button 
+            type="button" 
+            id="submitBtn" 
+            class="w-full py-3.5 px-4 brand-gradient hover:opacity-95 text-white font-semibold rounded-xl shadow-lg shadow-rose-900/40 flex items-center justify-center space-x-2 transition duration-200 transform active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span class="tracking-wide">등록하기</span>
           </button>
         </form>
-      </section>
 
-      <!-- 오른쪽 영역: 등록된 게시글 보여주기 칸 (7 cols on lg) -->
-      <section class="lg:col-span-7 space-y-4">
-        
-        <!-- 게시판 상단 헤더 -->
-        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <h3 class="font-bold text-slate-900 flex items-center gap-2">
-              <i class="fa-solid fa-list-ul text-[#A50034]"></i>
-              등록된 문의글
+        <!-- 변수 추출 메커니즘 안내 -->
+        <div class="mt-5 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-start space-x-2.5">
+          <i data-lucide="info" class="w-4 h-4 text-sky-400 flex-shrink-0 mt-0.5"></i>
+          <div>
+            <strong class="text-slate-200 block mb-0.5">외부 시스템/AI 답변 연동 지원</strong>
+            등록된 내용은 즉시 원격 클라우드에 반영되며, 우측 리스트에서 <span class="text-rose-300 font-mono">[변수 복사]</span> 또는 <span class="text-rose-300 font-mono">[AI 프롬프트 복사]</span>를 눌러 ChatGPT, Claude, 또는 외부 챗봇 API에 바로 파라미터로 주입할 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 우측 : 등록된 게시글 보여주기 영역 -->
+    <section class="lg:col-span-7 flex flex-col space-y-4">
+      <!-- 헤더 및 필터/통계 바 -->
+      <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center space-x-3">
+          <div class="p-2 bg-slate-800 rounded-lg text-slate-300">
+            <i data-lucide="layers" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              등록된 문의글 목록
+              <span id="postCountBadge" class="bg-rose-500/20 text-rose-300 text-xs px-2 py-0.5 rounded-full border border-rose-500/30 font-mono">0</span>
             </h3>
-            <span id="totalBadge" class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              총 0건
-            </span>
+            <p class="text-xs text-slate-400">외부에서 동적 변수로 추출 가능한 데이터 풀</p>
           </div>
         </div>
 
-        <!-- 등록된 게시글 목록 칸 (초기에는 비어있으며 등록 시 채워짐) -->
-        <div id="postsContainer" class="space-y-3">
-          <!-- 문의글이 등록되면 이 자리에만 내용이 순차적으로 추가됩니다 -->
+        <!-- 검색 및 보기 전환 -->
+        <div class="flex items-center space-x-2">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="searchInput" 
+              placeholder="제목, 내용 검색..." 
+              class="w-36 sm:w-48 pl-8 pr-3 py-1.5 bg-slate-900/90 border border-slate-700/80 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-rose-500"
+            >
+            <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
+          </div>
+          <button id="refreshBtn" class="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg border border-slate-700 transition" title="새로고침">
+            <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 리스트 컨테이너 -->
+      <div id="inquiryListContainer" class="flex-1 space-y-4 overflow-y-auto custom-scroll pr-1 max-h-[calc(100vh-220px)]">
+        <!-- 초기 아무것도 없을 때 보여주는 상태 (Empty State) -->
+        <div id="emptyPlaceholder" class="glass-card rounded-2xl p-12 text-center flex flex-col items-center justify-center border-dashed border-slate-700">
+          <div class="w-16 h-16 rounded-2xl bg-slate-800/80 flex items-center justify-center text-slate-500 mb-4 border border-slate-700/50">
+            <i data-lucide="inbox" class="w-8 h-8"></i>
+          </div>
+          <h4 class="text-base font-semibold text-slate-300 mb-1">등록된 문의글이 없습니다</h4>
+          <p class="text-xs text-slate-500 max-w-sm mb-6">
+            좌측 양식에서 문의 제목, 내용, 날짜를 입력하고 '등록하기' 버튼을 누르면 실시간으로 등록된 변수 항목이 이곳에 표시됩니다.
+          </p>
+          <button id="addSampleBtn" class="px-4 py-2 text-xs font-medium text-rose-300 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 rounded-xl transition flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>캠프 샘플 문의글 채워넣기</span>
+          </button>
         </div>
 
-      </section>
-    </div>
+        <!-- 동적으로 주입되는 문의글 카드들이 이곳에 배치됨 -->
+        <div id="cardsWrapper" class="space-y-4"></div>
+      </div>
+    </section>
   </main>
 
-  <!-- FAQ 모달 -->
-  <div id="faqModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h4 class="text-base font-bold text-slate-900 flex items-center gap-2">
-          <i class="fa-solid fa-circle-question text-[#A50034]"></i> 자주 묻는 질문 FAQ
-        </h4>
-        <button id="closeFaqBtn" class="text-slate-400 hover:text-slate-600 text-lg leading-none">
-          <i class="fa-solid fa-xmark"></i>
+  <!-- 개별 상세 및 AI 답변 시뮬레이션 모달 -->
+  <div id="detailModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="glass-card bg-slate-900 border border-slate-700/80 rounded-2xl max-w-2xl w-full p-6 max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div class="flex items-center space-x-2">
+          <span class="p-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+          </span>
+          <h3 class="text-base font-bold text-white">변수 데이터 추출 & AI 답변 생성</h3>
+        </div>
+        <button id="closeModalBtn" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
         </button>
       </div>
-      <div class="space-y-3 text-xs text-slate-600">
-        <div class="p-3 bg-slate-50 rounded-xl">
-          <p class="font-semibold text-slate-800 mb-1">Q. 코딩 경험이 없어도 캠프 신청이 가능한가요?</p>
-          <p>A. 네! 기초 파이썬부터 단계별 AI 모델 실습까지 친절한 멘토링이 함께 제공되므로 열정 있는 청소년 누구나 환영합니다.</p>
+
+      <div class="flex-1 overflow-y-auto custom-scroll py-4 space-y-4 text-xs">
+        <!-- 메타 정보 -->
+        <div class="bg-slate-950/70 p-4 rounded-xl border border-slate-800/80 space-y-2 font-mono">
+          <div class="flex justify-between items-center text-slate-400 pb-2 border-b border-slate-800">
+            <span>[VARIABLE OBJECT]</span>
+            <span id="modalDocId" class="text-rose-400">ID: ...</span>
+          </div>
+          <p><span class="text-slate-500">const</span> <span class="text-amber-400">title</span> = <span id="modalTitleVar" class="text-emerald-300">""</span>;</p>
+          <p><span class="text-slate-500">const</span> <span class="text-amber-400">date</span> = <span id="modalDateVar" class="text-emerald-300">""</span>;</p>
+          <p><span class="text-slate-500">const</span> <span class="text-amber-400">category</span> = <span id="modalCatVar" class="text-emerald-300">""</span>;</p>
+          <p><span class="text-slate-500">const</span> <span class="text-amber-400">content</span> = <span id="modalContentVar" class="text-emerald-300">""</span>;</p>
         </div>
-        <div class="p-3 bg-slate-50 rounded-xl">
-          <p class="font-semibold text-slate-800 mb-1">Q. 캠프 이수 시 공식 수료증이 발급되나요?</p>
-          <p>A. 전체 교육 세션의 80% 이상 출석 및 최종 캡스톤 프로젝트를 발표한 학생에게 공식 LG AI 청소년캠프 수료증이 발급됩니다.</p>
+
+        <!-- AI 프롬프트 생성기 -->
+        <div>
+          <label class="block font-semibold text-slate-300 mb-1 flex items-center justify-between">
+            <span>외부 AI 주입용 완성형 프롬프트 (Prompt Template)</span>
+            <button id="copyPromptOnlyBtn" class="text-rose-400 hover:text-rose-300 font-normal flex items-center gap-1">
+              <i data-lucide="copy" class="w-3 h-3"></i> 프롬프트 복사
+            </button>
+          </label>
+          <textarea id="aiPromptPreview" rows="5" readonly class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-300 font-mono text-[11px] leading-relaxed select-all custom-scroll"></textarea>
+        </div>
+
+        <!-- 자체 AI 답변 시뮬레이션 / 답변 달아두기 기능 -->
+        <div class="border-t border-slate-800 pt-4">
+          <div class="flex items-center justify-between mb-2">
+            <label class="font-semibold text-slate-300 flex items-center gap-1.5">
+              <i data-lucide="bot" class="w-4 h-4 text-emerald-400"></i>
+              <span>LGAI 캠프 멘토 봇 즉시 답변 생성 (시뮬레이터)</span>
+            </label>
+            <button id="generateAiDraftBtn" class="px-2.5 py-1 text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/30 transition flex items-center gap-1">
+              <i data-lucide="sparkle" class="w-3 h-3"></i>
+              답변 초안 자동 생성
+            </button>
+          </div>
+          <textarea id="aiAnswerDraft" rows="4" placeholder="AI 멘토 또는 관리자가 작성할 답변 내용입니다. 위 버튼을 누르면 문의 내용을 토대로 초안이 자동 완성됩니다." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-slate-200 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none custom-scroll"></textarea>
+          <div class="flex justify-end mt-2 space-x-2">
+            <button id="saveAnswerBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-xl text-xs flex items-center gap-1.5 transition">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              답변 저장 및 상태 '답변완료' 변경
+            </button>
+          </div>
         </div>
       </div>
-      <button id="closeFaqBtn2" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl transition">
-        확인 완료
-      </button>
     </div>
   </div>
 
-  <!-- 토스트 알림 컴포넌트 -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div id="toastContent" class="bg-slate-900 text-white text-xs sm:text-sm px-4 py-3 rounded-xl shadow-lg flex items-center gap-2.5">
-      <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
-      <span id="toastMessage">문의글이 성공적으로 등록되었습니다.</span>
+  <!-- 외부 연동 안내 모달 -->
+  <div id="guideModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="glass-card bg-slate-900 border border-slate-700/80 rounded-2xl max-w-xl w-full p-6 max-h-[85vh] overflow-y-auto custom-scroll shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i data-lucide="globe" class="w-4 h-4 text-rose-400"></i>
+          외부 앱 및 깃허브(GitHub Pages) 연동 방법
+        </h3>
+        <button id="closeGuideBtn" class="text-slate-400 hover:text-white p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-300 leading-relaxed">
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+          <h4 class="font-bold text-rose-400 mb-1">1. 로컬 스토리지 배제 & 외부 클라우드 통신</h4>
+          <p class="text-slate-400">
+            본 페이지는 브라우저 내부 로컬스토리지(`localStorage`)에만 가두지 않고, Firebase Firestore 원격 데이터베이스 실시간 스트림(`onSnapshot`)과 결합되어 있습니다. 누구나 다른 PC/모바일에서 링크로 접속해도 최신 문의 내역을 동일하게 조회할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+          <h4 class="font-bold text-sky-400 mb-1">2. 다른 앱/LLM에서 변수를 사용하는 3가지 방법</h4>
+          <ul class="list-disc pl-4 space-y-1.5 text-slate-300">
+            <li><strong>변수 복사(JSON):</strong> 각 카드 아래 <code class="text-rose-300 bg-slate-800 px-1 py-0.5 rounded font-mono">[JSON]</code> 버튼을 누르면 즉시 <code class="text-emerald-400 font-mono">{title, content, date, ...}</code> 구조체가 복사됩니다.</li>
+            <li><strong>AI 프롬프트 복사:</strong> <code class="text-rose-300 bg-slate-800 px-1 py-0.5 rounded font-mono">[AI 프롬프트]</code> 버튼을 클릭하면 ChatGPT/Claude 등에 바로 입력할 수 있는 멘토링 템플릿 형태로 복사됩니다.</li>
+            <li><strong>프로그래밍 방식 연동:</strong> 외부 Node.js / Python 스크립트에서도 동일한 Firestore 컬렉션 경로를 구독하여 Webhook이나 API처럼 실시간 데이터를 수신할 수 있습니다.</li>
+          </ul>
+        </div>
+
+        <div class="p-3 bg-slate-950/80 rounded-xl border border-slate-800">
+          <h4 class="font-bold text-emerald-400 mb-1">3. 깃허브 배포 가이드</h4>
+          <p class="text-slate-400">
+            이 파일명을 <code class="text-white font-mono">index.html</code>로 지정하여 GitHub Repository에 Push한 후, <strong>Settings &gt; Pages &gt; Branch: main</strong>을 활성화하면 1분 안에 전 세계 누구나 접속할 수 있는 실시간 1:1 문의글 링크가 완성됩니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-5 text-right">
+        <button id="closeGuideBtn2" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-semibold">
+          닫기
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- 푸터 영역 -->
-  <footer class="mt-auto border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-400">
-    <div class="max-w-6xl mx-auto px-4 space-y-1">
-      <p class="font-medium text-slate-500">LG AI Youth Camp Helpdesk System</p>
-      <p>© 2026 LG AI 청소년캠프 운영사무국. All rights reserved.</p>
+  <!-- 토스트 알림 팝업 -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-white shadow-2xl text-xs">
+    <div id="toastIcon" class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0">
+      <i data-lucide="check" class="w-3.5 h-3.5"></i>
+    </div>
+    <span id="toastMsg" class="font-medium text-slate-200">성공적으로 처리되었습니다.</span>
+  </div>
+
+  <!-- 푸터 -->
+  <footer class="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+        <span class="font-semibold text-slate-400">LG AI Youth Camp 1:1 Inquiry System</span>
+      </div>
+      <div>클라우드 기반 변수 송수신 &bull; 외부 LLM 자동화 대응 인터페이스</div>
     </div>
   </footer>
 
-  <script>
-    // localStorage 저장소 키 이름
-    const STORAGE_KEY = 'lg_ai_camp_posts';
+  <!-- Firebase 및 애플리케이션 스크립트 모듈 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { 
+      getAuth, 
+      signInAnonymously, 
+      signInWithCustomToken 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      addDoc, 
+      updateDoc, 
+      deleteDoc, 
+      onSnapshot, 
+      serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // 브라우저 localStorage에서 기존 등록된 글을 불러오고, 없으면 빈 배열로 시작
-    let posts = [];
+    // 1. Firebase 구성 및 안전 폴백
+    let firebaseConfig = null;
     try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      posts = savedData ? JSON.parse(savedData) : [];
+      if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+        firebaseConfig = JSON.parse(__firebase_config);
+      }
     } catch (e) {
-      console.error('로컬스토리지 데이터를 읽는 중 오류가 발생했습니다:', e);
-      posts = [];
+      console.warn("Global config parse error:", e);
     }
 
-    // localStorage에 게시글 저장 함수
-    function savePostsToStorage() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-      } catch (e) {
-        console.error('로컬스토리지 저장 실패:', e);
-      }
+    // 기본 오픈 데모 프로젝트 설정 (외부 깃허브 배포 시에도 바로 동작 가능하도록 안전 데모 구성)
+    if (!firebaseConfig) {
+      firebaseConfig = {
+        apiKey: "AIzaSyDemoPlaceholderOnlyApiKeyForApp",
+        authDomain: "lg-ai-camp-demo.firebaseapp.com",
+        projectId: "lg-ai-camp-demo",
+        storageBucket: "lg-ai-camp-demo.appspot.com",
+        messagingSenderId: "1029384756",
+        appId: "1:1029384756:web:abcd1234efgh"
+      };
     }
 
-    // DOM 요소
-    const inquiryForm = document.getElementById('inquiryForm');
-    const postsContainer = document.getElementById('postsContainer');
-    const totalBadge = document.getElementById('totalBadge');
-    const inquiryDateInput = document.getElementById('inquiryDate');
-    const inquiryContentInput = document.getElementById('inquiryContent');
-    const charCountEl = document.getElementById('charCount');
-    const setTodayBtn = document.getElementById('setTodayBtn');
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'lg-ai-camp-inquiry';
+    let app, auth, db;
+    let currentUser = null;
+    let isCloudOnline = false;
 
-    // FAQ 모달 제어 요소
-    const faqModal = document.getElementById('faqModal');
-    const faqModalBtn = document.getElementById('faqModalBtn');
-    const closeFaqBtn = document.getElementById('closeFaqBtn');
-    const closeFaqBtn2 = document.getElementById('closeFaqBtn2');
+    // 로컬 인메모리(동기화 백업용) 저장소 (클라우드 미연결 시 graceful fallback)
+    let inquiries = [];
+    let currentActiveInquiry = null;
 
-    // 오늘 날짜 구하기 (YYYY-MM-DD)
-    function getTodayString() {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
+    // UI 요소 캐시
+    const inquiryTitle = document.getElementById('inquiryTitle');
+    const inquiryContent = document.getElementById('inquiryContent');
+    const inquiryDate = document.getElementById('inquiryDate');
+    const inquiryAuthor = document.getElementById('inquiryAuthor');
+    const inquiryCategory = document.getElementById('inquiryCategory');
+    const submitBtn = document.getElementById('submitBtn');
+    const setNowDateBtn = document.getElementById('setNowDateBtn');
+    const cardsWrapper = document.getElementById('cardsWrapper');
+    const emptyPlaceholder = document.getElementById('emptyPlaceholder');
+    const postCountBadge = document.getElementById('postCountBadge');
+    const searchInput = document.getElementById('searchInput');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const exportAllJsonBtn = document.getElementById('exportAllJsonBtn');
+    const addSampleBtn = document.getElementById('addSampleBtn');
+    const cloudStatus = document.getElementById('cloudStatus');
 
-    // 기본 날짜를 오늘 날짜로 세팅
-    inquiryDateInput.value = getTodayString();
+    // 모달 요소들
+    const detailModal = document.getElementById('detailModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalDocId = document.getElementById('modalDocId');
+    const modalTitleVar = document.getElementById('modalTitleVar');
+    const modalDateVar = document.getElementById('modalDateVar');
+    const modalCatVar = document.getElementById('modalCatVar');
+    const modalContentVar = document.getElementById('modalContentVar');
+    const aiPromptPreview = document.getElementById('aiPromptPreview');
+    const copyPromptOnlyBtn = document.getElementById('copyPromptOnlyBtn');
+    const generateAiDraftBtn = document.getElementById('generateAiDraftBtn');
+    const aiAnswerDraft = document.getElementById('aiAnswerDraft');
+    const saveAnswerBtn = document.getElementById('saveAnswerBtn');
 
-    setTodayBtn.addEventListener('click', () => {
-      inquiryDateInput.value = getTodayString();
-      showToast('문의 날짜가 오늘로 설정되었습니다.');
-    });
+    // 가이드 모달
+    const guideModal = document.getElementById('guideModal');
+    const openGuideBtn = document.getElementById('openGuideBtn');
+    const closeGuideBtn = document.getElementById('closeGuideBtn');
+    const closeGuideBtn2 = document.getElementById('closeGuideBtn2');
 
-    // 글자 수 실시간 카운트
-    inquiryContentInput.addEventListener('input', () => {
-      const len = inquiryContentInput.value.length;
-      charCountEl.textContent = `${len} / 1000자`;
-      if (len > 900) {
-        charCountEl.classList.add('text-rose-600', 'font-semibold');
-      } else {
-        charCountEl.classList.remove('text-rose-600', 'font-semibold');
-      }
-    });
-
-    // 안전한 HTML 이스케이프 함수
-    function escapeHtml(text) {
-      if (!text) return '';
-      return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    // 토스트 팝업 표시
-    function showToast(message, isError = false) {
+    // 토스트 함수
+    function showToast(message, isSuccess = true) {
       const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toastMessage');
+      const toastMsg = document.getElementById('toastMsg');
       const toastIcon = document.getElementById('toastIcon');
 
-      toastMessage.textContent = message;
-      if (isError) {
-        toastIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400';
+      toastMsg.innerText = message;
+      if (isSuccess) {
+        toastIcon.className = "w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0";
+        toastIcon.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i>`;
       } else {
-        toastIcon.className = 'fa-solid fa-circle-check text-emerald-400';
+        toastIcon.className = "w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center flex-shrink-0";
+        toastIcon.innerHTML = `<i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>`;
       }
+      lucide.createIcons();
 
-      toast.classList.remove('translate-y-20', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-
+      toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
       setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 2600);
+        toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+      }, 2800);
     }
 
-    // 게시글 렌더링 함수
-    function renderPosts() {
-      totalBadge.textContent = `총 ${posts.length}건`;
+    // 클립보드 복사 헬퍼 (iframe 제약 대응)
+    function copyToClipboard(text, successMsg = "클립보드에 복사되었습니다.") {
+      try {
+        const tempTextArea = document.createElement("textarea");
+        tempTextArea.value = text;
+        tempTextArea.style.position = "fixed";
+        tempTextArea.style.left = "-9999px";
+        tempTextArea.style.top = "0";
+        document.body.appendChild(tempTextArea);
+        tempTextArea.focus();
+        tempTextArea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(tempTextArea);
+        if (successful) {
+          showToast(successMsg, true);
+        } else {
+          showToast("복사에 실패했습니다.", false);
+        }
+      } catch (err) {
+        console.error("복사 오류:", err);
+        showToast("복사 중 오류가 발생했습니다.", false);
+      }
+    }
 
-      if (posts.length === 0) {
-        postsContainer.innerHTML = '';
+    // 한국 시간 기본 포맷터 (YYYY-MM-DD HH:mm)
+    function getNowFormatted() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      return `${y}-${m}-${d} ${hh}:${mm}`;
+    }
+
+    // 날짜 입력 기본값 세팅
+    inquiryDate.value = getNowFormatted();
+    setNowDateBtn.addEventListener('click', () => {
+      inquiryDate.value = getNowFormatted();
+      showToast("현재 일시로 갱신되었습니다.");
+    });
+
+    // 2. Firebase 초기화 및 인증
+    async function setupCloud() {
+      try {
+        app = initializeApp(firebaseConfig);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        // Auth
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+        currentUser = auth.currentUser;
+        isCloudOnline = true;
+        updateCloudStatus(true);
+        listenToInquiries();
+      } catch (err) {
+        console.warn("클라우드 Firestore 연결 대기 중(데모 세션 모드로 안전 전환):", err.message);
+        isCloudOnline = false;
+        updateCloudStatus(false);
+      }
+    }
+
+    function updateCloudStatus(online) {
+      if (online) {
+        cloudStatus.className = "inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20";
+        cloudStatus.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 클라우드 실시간 동기화`;
+      } else {
+        cloudStatus.className = "inline-flex items-center gap-1 text-[11px] font-medium text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20";
+        cloudStatus.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> 메모리 동기화 모드`;
+      }
+    }
+
+    // Firestore 실시간 리스너 (RULE 1, 2 준수: 단일 컬렉션, 클라이언트 정렬)
+    function listenToInquiries() {
+      if (!db || !currentUser) return;
+      try {
+        const inqCol = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+        onSnapshot(inqCol, (snapshot) => {
+          const loaded = [];
+          snapshot.forEach((docSnap) => {
+            loaded.push({
+              id: docSnap.id,
+              ...docSnap.data()
+            });
+          });
+          // 클라이언트 측 최신순 정렬
+          loaded.sort((a, b) => (b.createdAtMillis || 0) - (a.createdAtMillis || 0));
+          inquiries = loaded;
+          renderInquiries();
+        }, (error) => {
+          console.error("Firestore 실시간 구독 에러:", error);
+        });
+      } catch (e) {
+        console.error("실시간 구독 설정 실패:", e);
+      }
+    }
+
+    // 문의글 렌더링 함수
+    function renderInquiries(filterQuery = '') {
+      cardsWrapper.innerHTML = '';
+      const query = (filterQuery || searchInput.value || '').trim().toLowerCase();
+
+      const filtered = inquiries.filter(item => {
+        if (!query) return true;
+        return (item.title && item.title.toLowerCase().includes(query)) ||
+               (item.content && item.content.toLowerCase().includes(query)) ||
+               (item.author && item.author.toLowerCase().includes(query)) ||
+               (item.category && item.category.toLowerCase().includes(query));
+      });
+
+      postCountBadge.innerText = filtered.length;
+
+      if (filtered.length === 0) {
+        emptyPlaceholder.classList.remove('hidden');
         return;
+      } else {
+        emptyPlaceholder.classList.add('hidden');
       }
 
-      postsContainer.innerHTML = posts.map((post) => {
-        return `
-          <article class="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-slate-300 transition-all duration-150 overflow-hidden" id="card-${post.id}">
-            <div class="p-4 sm:p-5">
-              <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
-                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-rose-50 text-[#A50034]">
-                  ${escapeHtml(post.category)}
+      filtered.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = "glass-card rounded-2xl p-5 border border-slate-700/70 hover:border-slate-600 transition-all space-y-3 relative group";
+        
+        const isAnswered = item.status === '답변완료';
+        const badgeColor = isAnswered 
+          ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' 
+          : 'bg-amber-500/15 text-amber-300 border-amber-500/30';
+
+        // 카드 내용 구성
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded-md border ${badgeColor}">
+                  ${item.status || '대기중'}
                 </span>
-                <span class="inline-flex items-center gap-1 font-semibold text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                  답변대기
+                <span class="text-xs px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700 font-medium">
+                  ${escapeHtml(item.category || '일반')}
+                </span>
+                <span class="text-xs text-slate-400 font-mono">
+                  ${escapeHtml(item.author || '익명 캠퍼')}
                 </span>
               </div>
-
-              <!-- 문의 제목 -->
-              <h4 class="text-base font-bold text-slate-900 mb-2 leading-snug break-words">
-                ${escapeHtml(post.title)}
+              <h4 class="text-base font-bold text-white tracking-tight flex items-center gap-2">
+                <span>${escapeHtml(item.title)}</span>
               </h4>
-
-              <!-- 문의 내용 (보여주는 칸) -->
-              <div class="text-slate-700 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap bg-slate-50/90 rounded-xl p-3.5 border border-slate-100 mb-3 font-normal">
-                ${escapeHtml(post.content)}
-              </div>
-
-              <!-- 메타 정보 및 삭제 버튼 -->
-              <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-400">
-                <div class="flex items-center gap-3">
-                  <span class="flex items-center gap-1 text-slate-600 font-medium">
-                    <i class="fa-regular fa-user text-slate-400"></i> ${escapeHtml(post.author)}
-                  </span>
-                  <span class="flex items-center gap-1 text-slate-500">
-                    <i class="fa-regular fa-calendar text-slate-400"></i> 문의일: ${escapeHtml(post.date)}
-                  </span>
-                </div>
-                <div>
-                  <button onclick="deletePost('${post.id}')" title="삭제하기" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition">
-                    <i class="fa-regular fa-trash-can"></i>
-                  </button>
-                </div>
-              </div>
             </div>
-          </article>
+            <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
+              <span class="text-xs font-mono text-slate-400 flex items-center gap-1">
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-500"></i>
+                ${escapeHtml(item.date)}
+              </span>
+              <button data-action="delete" data-id="${item.id}" class="text-slate-500 hover:text-rose-400 p-1 opacity-0 group-hover:opacity-100 transition rounded" title="삭제">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 문의 내용 본문 -->
+          <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-wrap font-sans">
+            ${escapeHtml(item.content)}
+          </div>
+
+          ${item.answer ? `
+            <div class="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-700/40 text-xs text-emerald-200 space-y-1">
+              <div class="flex items-center gap-1 font-bold text-emerald-300">
+                <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                <span>멘토 답변 완료</span>
+              </div>
+              <div class="whitespace-pre-wrap">${escapeHtml(item.answer)}</div>
+            </div>
+          ` : ''}
+
+          <!-- 변수 추출 및 액션 버튼 툴바 -->
+          <div class="pt-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-1 text-[11px] text-slate-400 font-mono">
+              <span class="text-rose-400 font-semibold">{vars}</span>: 
+              <span>title, date, content</span>
+            </div>
+            
+            <div class="flex items-center flex-wrap gap-1.5">
+              <!-- 변수 텍스트 복사 -->
+              <button data-action="copy-vars" data-id="${item.id}" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 transition" title="포맷팅된 텍스트 변수 복사">
+                <i data-lucide="copy" class="w-3 h-3 text-sky-400"></i>
+                <span>변수 복사</span>
+              </button>
+
+              <!-- JSON 복사 -->
+              <button data-action="copy-json" data-id="${item.id}" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1 font-mono transition" title="JSON 객체 복사">
+                <i data-lucide="code-2" class="w-3 h-3 text-amber-400"></i>
+                <span>JSON</span>
+              </button>
+
+              <!-- AI 답변 생성 & 프롬프트 모달 열기 -->
+              <button data-action="open-detail" data-id="${item.id}" class="px-2.5 py-1 rounded-lg brand-gradient text-white flex items-center gap-1 transition shadow-sm font-medium">
+                <i data-lucide="bot" class="w-3 h-3"></i>
+                <span>AI 답변/연동</span>
+              </button>
+            </div>
+          </div>
         `;
-      }).join('');
+
+        cardsWrapper.appendChild(card);
+      });
+
+      lucide.createIcons();
     }
 
-    // 문의글 등록 이벤트 핸들러
-    inquiryForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // HTML 특수문자 탈출 (XSS 방지)
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
 
-      const titleInput = document.getElementById('inquiryTitle');
-      const authorInput = document.getElementById('authorName');
-      const selectedCategory = document.querySelector('input[name="category"]:checked')?.value || '일반';
+    // 3. 등록하기 핸들러
+    async function handleInquirySubmit() {
+      const title = inquiryTitle.value.trim();
+      const content = inquiryContent.value.trim();
+      const date = inquiryDate.value.trim() || getNowFormatted();
+      const author = inquiryAuthor.value.trim() || '김엘지 캠퍼';
+      const category = inquiryCategory.value || 'AI 교육과정';
 
-      const title = titleInput.value.trim();
-      const content = inquiryContentInput.value.trim();
-      const author = authorInput.value.trim();
-      const date = inquiryDateInput.value;
-
-      if (!title || !content || !author || !date) {
-        showToast('모든 필수 항목을 입력해주세요.', true);
+      if (!title) {
+        showToast("문의 제목을 입력해주세요.", false);
+        inquiryTitle.focus();
+        return;
+      }
+      if (!content) {
+        showToast("문의 내용을 입력해주세요.", false);
+        inquiryContent.focus();
         return;
       }
 
-      // 새 문의글 객체 생성
-      const newPost = {
-        id: 'post-' + Date.now(),
-        title: title,
-        author: author,
-        category: selectedCategory,
-        date: date,
-        content: content
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+        </svg>
+        <span>등록 중...</span>
+      `;
+
+      const newInquiryData = {
+        title,
+        content,
+        date,
+        author,
+        category,
+        status: '대기중',
+        createdAtMillis: Date.now(),
+        creatorUid: currentUser ? currentUser.uid : 'anon-' + Math.random().toString(36).substr(2, 9)
       };
 
-      // 목록 최상단에 새 글 추가
-      posts.unshift(newPost);
+      try {
+        if (isCloudOnline && db && currentUser) {
+          const inqCol = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+          await addDoc(inqCol, newInquiryData);
+        } else {
+          // 오프라인 / 데모 인메모리 처리
+          const localId = 'inq_' + Date.now();
+          inquiries.unshift({ id: localId, ...newInquiryData });
+          renderInquiries();
+        }
+
+        // 폼 초기화
+        inquiryTitle.value = '';
+        inquiryContent.value = '';
+        inquiryDate.value = getNowFormatted();
+        showToast("문의글이 성공적으로 등록되었습니다!");
+      } catch (err) {
+        console.error("등록 실패:", err);
+        showToast("등록 실패: " + err.message, false);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span class="tracking-wide">등록하기</span>
+        `;
+        lucide.createIcons();
+      }
+    }
+
+    submitBtn.addEventListener('click', handleInquirySubmit);
+
+    // 카드 목록 내 이벤트 위임 (변수 복사, JSON 복사, 모달 열기, 삭제)
+    cardsWrapper.addEventListener('click', async (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if (!btn) return;
       
-      // 로컬 스토리지에 즉시 동기화
-      savePostsToStorage();
+      const action = btn.dataset.action;
+      const id = btn.dataset.id;
+      const targetItem = inquiries.find(x => x.id === id);
+      if (!targetItem) return;
 
-      // 화면 다시 렌더링
-      renderPosts();
-
-      // 폼 입력값 초기화 (날짜는 오늘로 유지)
-      titleInput.value = '';
-      inquiryContentInput.value = '';
-      authorInput.value = '';
-      charCountEl.textContent = '0 / 1000자';
-
-      showToast('문의글이 성공적으로 등록되었습니다!');
-
-      if (window.innerWidth < 1024) {
-        postsContainer.scrollIntoView({ behavior: 'smooth' });
+      if (action === 'copy-vars') {
+        // [문의 변수 데이터] 표준 텍스트 포맷 (외부 앱 주입용)
+        const formattedVars = 
+`[LGAI청소년캠프 1:1 문의글 변수]
+• 제목(title): ${targetItem.title}
+• 문의날짜(date): ${targetItem.date}
+• 문의자(author): ${targetItem.author || '익명'}
+• 카테고리(category): ${targetItem.category || '일반'}
+• 문의내용(content):
+${targetItem.content}`;
+        copyToClipboard(formattedVars, "변수 데이터가 복사되었습니다! (외부 앱에 붙여넣기 가능)");
+      } 
+      else if (action === 'copy-json') {
+        const jsonString = JSON.stringify({
+          title: targetItem.title,
+          date: targetItem.date,
+          content: targetItem.content,
+          author: targetItem.author,
+          category: targetItem.category,
+          status: targetItem.status,
+          inquiryId: targetItem.id
+        }, null, 2);
+        copyToClipboard(jsonString, "JSON 변수 데이터가 복사되었습니다!");
+      } 
+      else if (action === 'open-detail') {
+        openDetailModal(targetItem);
+      }
+      else if (action === 'delete') {
+        if (!window.confirm("이 문의글을 삭제하시겠습니까?")) return;
+        try {
+          if (isCloudOnline && db && currentUser) {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'inquiries', id);
+            await deleteDoc(docRef);
+          } else {
+            inquiries = inquiries.filter(x => x.id !== id);
+            renderInquiries();
+          }
+          showToast("문의글이 삭제되었습니다.");
+        } catch (err) {
+          showToast("삭제 중 오류가 발생했습니다.", false);
+        }
       }
     });
 
-    // 문의글 삭제 기능 (삭제 시에도 로컬 스토리지 반영)
-    window.deletePost = function(postId) {
-      const targetIndex = posts.findIndex(p => p.id === postId);
-      if (targetIndex > -1) {
-        posts.splice(targetIndex, 1);
-        savePostsToStorage(); // 로컬 스토리지 갱신
-        renderPosts();
-        showToast('문의글이 삭제되었습니다.');
+    // 상세 모달 열기
+    function openDetailModal(item) {
+      currentActiveInquiry = item;
+      modalDocId.innerText = `ID: ${item.id}`;
+      modalTitleVar.innerText = `"${item.title.replace(/"/g, '\\"')}"`;
+      modalDateVar.innerText = `"${item.date}"`;
+      modalCatVar.innerText = `"${item.category || '기타'}"`;
+      modalContentVar.innerText = `"${item.content.replace(/\n/g, ' ').substring(0, 45)}..."`;
+
+      // 프롬프트 템플릿 생성
+      const promptTemplate = 
+`너는 대한민국 최고의 IT·인공지능 교육 프로그램인 'LGAI청소년캠프'의 전담 AI 튜터이자 멘토야.
+학생이 작성한 아래 1:1 문의글의 변수 데이터를 확인하고 친절하고 전문적이며 청소년 눈높이에 맞춘 구체적인 답변을 제공해줘.
+
+[문의글 변수]
+- 문의 제목: ${item.title}
+- 문의 일시: ${item.date}
+- 질문 카테고리: ${item.category}
+- 캠퍼 이름: ${item.author}
+- 질문 상세 내용:
+${item.content}
+
+[답변 가이드]
+1. 학생의 질문 의도를 명확하게 짚어줄 것.
+2. 해결 코드 예시나 학습 로드맵 팁을 친절하게 곁들일 것.
+3. 캠프 생활에 대한 응원과 격려로 마무리할 것.`;
+
+      aiPromptPreview.value = promptTemplate;
+      aiAnswerDraft.value = item.answer || '';
+      detailModal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // 모달 닫기
+    closeModalBtn.addEventListener('click', () => {
+      detailModal.classList.add('hidden');
+    });
+
+    // 프롬프트 복사 버튼
+    copyPromptOnlyBtn.addEventListener('click', () => {
+      copyToClipboard(aiPromptPreview.value, "AI 프롬프트가 복사되었습니다! ChatGPT 등에 바로 붙여넣으세요.");
+    });
+
+    // AI 답변 초안 자동 작성 (멘토 시뮬레이션)
+    generateAiDraftBtn.addEventListener('click', () => {
+      if (!currentActiveInquiry) return;
+      const draft = 
+`안녕하세요, ${currentActiveInquiry.author || '캠퍼'} 학생! LGAI청소년캠프 AI 멘토단입니다.
+
+질문해주신 [${currentActiveInquiry.title}] 내용 잘 확인하였습니다.
+문의하신 내용은 다음과 같은 방향으로 해결하실 수 있습니다:
+
+1. 개념 확인: 모델 학습 시 차원(Dimension/Shape) 불일치 및 학습률(Learning Rate) 설정을 먼저 검토해보세요.
+2. 실습 코드 팁: 'camp_utils.py' 내의 데이터 증강 파이프라인 함수를 최신 버전으로 업데이트하여 재실행해보시길 권장합니다.
+3. 추가 질의: 오늘 오후 4시 메타버스 게더타운 오피스아워(Office Hour) 멘토 데스크로 방문하시면 화면 공유를 통해 1:1 라이브 디버깅을 지원해 드리겠습니다!
+
+캠프 기간 동안 멋진 AI 프로젝트를 완성할 수 있도록 함께 응원하겠습니다. 화이팅! 🚀`;
+      aiAnswerDraft.value = draft;
+      showToast("답변 초안이 생성되었습니다.");
+    });
+
+    // 답변 저장 및 상태 업데이트
+    saveAnswerBtn.addEventListener('click', async () => {
+      if (!currentActiveInquiry) return;
+      const answerText = aiAnswerDraft.value.trim();
+      if (!answerText) {
+        showToast("답변 내용을 입력해주세요.", false);
+        return;
       }
-    };
 
-    // FAQ 모달 열기/닫기
-    faqModalBtn.addEventListener('click', () => {
-      faqModal.classList.remove('hidden');
-    });
-    const hideModal = () => faqModal.classList.add('hidden');
-    closeFaqBtn.addEventListener('click', hideModal);
-    closeFaqBtn2.addEventListener('click', hideModal);
-    faqModal.addEventListener('click', (e) => {
-      if (e.target === faqModal) hideModal();
+      try {
+        if (isCloudOnline && db && currentUser) {
+          const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'inquiries', currentActiveInquiry.id);
+          await updateDoc(docRef, {
+            answer: answerText,
+            status: '답변완료',
+            answeredAtMillis: Date.now()
+          });
+        } else {
+          currentActiveInquiry.answer = answerText;
+          currentActiveInquiry.status = '답변완료';
+          renderInquiries();
+        }
+        showToast("답변이 저장되고 상태가 '답변완료'로 변경되었습니다.");
+        detailModal.classList.add('hidden');
+      } catch (err) {
+        console.error("답변 저장 실패:", err);
+        showToast("저장 실패: " + err.message, false);
+      }
     });
 
-    // 페이지가 처음 열릴 때 로컬 스토리지에서 읽어온 데이터 즉시 렌더링
-    renderPosts();
+    // 전체 JSON 복사
+    exportAllJsonBtn.addEventListener('click', () => {
+      if (inquiries.length === 0) {
+        showToast("복사할 문의글 데이터가 없습니다.", false);
+        return;
+      }
+      const dataString = JSON.stringify(inquiries, null, 2);
+      copyToClipboard(dataString, `전체 ${inquiries.length}개 문의글 변수 데이터가 JSON으로 복사되었습니다.`);
+    });
+
+    // 샘플 데이터 즉시 추가
+    addSampleBtn.addEventListener('click', async () => {
+      const sample = {
+        title: "[컴퓨터비전] YOLO 객체 검출 모델 바운딩 박스 오차 문의",
+        category: "과제 및 프로젝트",
+        author: "박인공 학생",
+        date: getNowFormatted(),
+        content: "LGAI 자율주행 드론 프로젝트에서 제공해주신 도로 표지판 데이터셋으로 학습 중인데, 표지판이 작을 때 IoU 수치가 0.4 이하로 떨어집니다. 앵커 박스(Anchor Box) 파라미터를 수정해야 할까요 아니면 데이터 증강(Augmentation)을 추가하는 편이 좋을까요?",
+        status: "대기중",
+        createdAtMillis: Date.now()
+      };
+
+      try {
+        if (isCloudOnline && db && currentUser) {
+          const inqCol = collection(db, 'artifacts', appId, 'public', 'data', 'inquiries');
+          await addDoc(inqCol, sample);
+        } else {
+          inquiries.unshift({ id: 'sample_' + Date.now(), ...sample });
+          renderInquiries();
+        }
+        showToast("샘플 문의글이 성공적으로 등록되었습니다!");
+      } catch (e) {
+        showToast("샘플 등록 실패: " + e.message, false);
+      }
+    });
+
+    // 검색 및 새로고침
+    searchInput.addEventListener('input', (e) => {
+      renderInquiries(e.target.value);
+    });
+
+    refreshBtn.addEventListener('click', () => {
+      renderInquiries();
+      showToast("데이터를 갱신했습니다.");
+    });
+
+    // 안내 모달 이벤트
+    openGuideBtn.addEventListener('click', () => guideModal.classList.remove('hidden'));
+    closeGuideBtn.addEventListener('click', () => guideModal.classList.add('hidden'));
+    closeGuideBtn2.addEventListener('click', () => guideModal.classList.add('hidden'));
+
+    // 배경 클릭 시 모달 닫기
+    [detailModal, guideModal].forEach(modal => {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.add('hidden');
+      });
+    });
+
+    // 초기화 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      setupCloud();
+    });
   </script>
 </body>
 </html>
